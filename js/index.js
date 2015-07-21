@@ -43,40 +43,22 @@
         };
     });
 
-    S.add("ppt/easing", ["node"], function(S, require, exports, module){
-        var $ = require("node"),
-            W = $(document.body).width();
-
-        return navigator.userAgent.match(/MSIE [5-9]/i) ? {
-            ease: function(_x){
-                this.animate({
-                    left: _x * W
-                },.3);
-            }
-        }:{
-            ease: function(_x){
-                this.css({
-                    transform: "translate3d(" + (_x * W) + "px, 0, 0)"
-                });
-            }
-        };
-    });
-
-    S.add("ppt/tab", ["node","ppt/r","ppt/easing"], function(S, require, exports, module){
+    S.add("ppt/tab", ["node","ppt/r","ppt/effect"], function(S, require, exports, module){
         var 
             R = require("ppt/r"),
-            EAS = require("ppt/easing"),
+            EAS = require("ppt/effect"),
             $ = require("node").all,
 
             index = -1,
             tar_index = 0,
             container = {},
             sections = {}, 
-            easing = {},
+            effect = function(){},
             defaults = {
                 index: 0,
-                type: "ease",
-                auto: false
+                effect: "ease",
+                auto: false,
+                autoTime: 5000
             };
 
         var Tab = function(con, conf){
@@ -84,39 +66,68 @@
             container = $(con);
             this.sections = sections = container.children();
             tar_index = defaults.index | 0;
-            easing = EAS[defaults.type] || EAS.ease;
-            container.addClass("easing-"+defaults.type);
+            effect = EAS[defaults.effect] || EAS.ease;
+
 
         };
+        $(document).on("keydown", function(e){
+            switch(e.keyCode){
+                case 32: defaults.auto = !defaults.auto; if(defaults.auto){return;}else{break;}
+                case 39:
+                case 40: tar_index = index + 1; break;
+                case 37:
+                case 38: tar_index = index - 1; break; 
+            }
+        }).on("swipe", function(e){
+            switch(e.direction){
+                case "left":
+                    tar_index = index + 1; break;
+                case "right":
+                    tar_index = index - 1; break;
+            }
+        }).delegate("click",".ppt-prev",function(){
+            tar_index = index - 1;
+        }).delegate("click",".ppt-next",function(){
+            tar_index = index + 1;
+        }).on("mousemove", function(e){
+            var per = (e.pageX / document.body.clientWidth) || 0;
+            if( per < .2 || per > .8 ){
+                $(".step-container").show()
+            }else{
+                $(".step-container").hide();
+            }
+        });
 
         S.augment(Tab,{
             to: function(i){
                 tar_index = i;
-            }
-        });
-
-        $(document).on("keyup", function(e){
-            if( !defaults.auto ){
-                switch(e.keyCode){
-                    case 32:  break;
-                    case 39:
-                    case 40: tar_index = index + 1; break;
-                    case 37:
-                    case 38: tar_index = index - 1; break; 
+            },
+            setAuto: function(auto){
+                if(auto){
+                    // 监听自动播放
+                    R.addTimeout("ppt/auto", function(){
+                        if(defaults.auto){
+                            tar_index = index + 1;
+                        }
+                    },auto);
+                }else{
+                    defaults.auto = false;
                 }
+                return this;
             }
-        });
-
-        // 监听自动播放
-        R.addTimeout("ppt/auto", function(){
-
         });
 
 
         // 监听运行
         R.addTimeout("ppt/tab", function(){
             if( sections.each && index != tar_index ){
-                index = tar_index = Math.min( Math.max( 0, tar_index ), sections.length - 1);;
+                tar_index = Math.max( 0, tar_index ) % sections.length;
+                var dir = tar_index - index;
+                if(!dir){
+                    return;
+                }else{
+                    index = tar_index;
+                }    
                 sections.each(function(dom, i){
                     this.removeClass("current");
                     this.removeClass("next");
@@ -129,7 +140,8 @@
                         default: 
                     }
                     this.addClass( flag );
-                    easing && easing.call(this, i-index);
+
+                    (EAS[this.attr("data-effect")] || effect).call(this, i-index, dir);
                 });
             }
         });
@@ -137,10 +149,46 @@
     });
 
 
-    S.add("ppt/index", ["ppt/tab"],function(S, require, exports, module){
-        var Tab = require("ppt/tab");
-        var tab = new Tab("#container");
+    S.add("ppt/compile",[],function(S){
+        var template = '<section data-effect="{{effect}}" class="effect-{{effect}}">'
+            +'<img src="{{typeData}}" class="bg-ppt"/>'
+            +'<div class="layout layout-{{layout}}">'
+                +'<div class="opacity" style="background-color:{{bgColor}};"></div>'
+                +'<div class="layout-inner">'
+                    +'<h2>{{title}}</h2>'
+                    +'<div class="desc">{{desc}}</div>'
+                    +'<div class="start">{{start}}</div>'
+                +'</div>'
+            +'</div>'
+            +'</section>';
+        return function(data){
+            data.typeData = data.typeData || data.pic;
+            data.layout = data.layout || "3-4-5";
+            data.desc = '<p>'+(data.desc||"").replace(/\/n/g,'</p><p>')+'</p>'
+            data.start = data.start ? ('<a href="javascript:void(0);" class="ppt-next">'+data.start+'</a>') : '';
+            return template.replace(/\{\{(\w+)\}\}/g,function(mat,k){
+                return data[k] || "";
+            });
+        };
+    });
 
+    S.add("ppt/index", ["node","ppt/compile","ppt/tab"],function(S, require, exports, module){
+        var $ = require("node").all,
+            compile = require("ppt/compile"),
+            Tab = require("ppt/tab");
+
+        var container = $("#container"), innerHTML = "";
+        innerHTML += compile(data.cover);
+        S.each(data.content, function(page){
+            innerHTML += compile(page);            
+        });
+        container.html( innerHTML );
+
+        var tab = new Tab(container,{
+            effect: "rotate"
+        });
+
+        tab.setAuto(2000).setAuto(false);
 
     });
 })(KISSY);

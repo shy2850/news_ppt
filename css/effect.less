@@ -1,0 +1,50 @@
+#container{
+    perspective: 800px;
+    transform-style: preserve-3d;
+
+    .effect-rotate{
+        &.current{
+            transition: all .5s ease .5s;
+        }
+        &.prev, &.next{
+            transition: all .5s ease 0s;
+        }
+    }
+    .effect-fade{
+        transition: all .5s ease 0s;
+        &.prev, &.next{
+            transform: translate3d(100px, 50px, 0);
+        }
+    }
+    .effect-dirShow{
+        &.show{
+            &.left{animation: show-left 1s forwards ease;}
+            &.right{animation: show-right 1s forwards ease;}
+        }
+        &.hide{
+            &.left{animation: hide-left 1s forwards ease;}
+            &.right{animation: hide-right 1s forwards ease;}
+        }
+    }
+}
+
+@keyframes show-right{
+    0%{ transform:translateZ(-200px);}
+    40%{ transform:translate(40%,0) scale(0.8) rotateY(-20deg);}
+    100%{ transform:translateZ(0px);}
+}
+@keyframes hide-right{
+    0%{ transform:translateZ(0px); visibility:visible;}
+    40%{ transform:translate(-40%,0) scale(0.8) rotateY(20deg); }
+    100%{ transform:translateZ(-200px); visibility:hidden;}
+}
+@keyframes show-left{
+    0%{ transform:translateZ(-200px);}
+    40%{ transform:translate(-40%,0) scale(0.8) rotateY(20deg); }
+    100%{ transform:translateZ(0px);}
+}
+@keyframes hide-left{
+    0%{ transform:translateZ(0px); visibility:visible;}
+    40%{ transform:translate(40%,0) scale(0.8) rotateY(-20deg);}
+    100%{ transform:translateZ(-200px); visibility:hidden;}
+}
