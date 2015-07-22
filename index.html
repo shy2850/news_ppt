@@ -14,7 +14,11 @@
     <title>PPT</title>
     <link rel="stylesheet" href="<%=path%>css/style<%=css%>">
     <!--[if lte IE 8]>
-        <script>document.createElement("section")</script>
+        <script>
+            document.createElement("header");
+            document.createElement("section");
+            document.createElement("footer");
+        </script>
     <![endif]-->
 </head>
 <body>
@@ -22,12 +26,28 @@
 <style>
     .odd{background: red;}
 </style>
+    <header>
+        <a href="http://xuan.news.cn/newspace/index.html">
+            <img src="img/logo.png" alt="新时空-幻灯片" class="logo">
+        </a>
+    </header>
     <div id="container" tabindex="-1">
     </div>
-    <div class="step-container">
-        <a href="javascript:void(0);"><img src="img/prev.png" class="ppt-prev" alt="prev"></a>
-        <a href="javascript:void(0);"><img src="img/next.png" class="ppt-next" alt="next"></a>
+    <a href="javascript:void(0);" class="step-container ppt-prev">
+        <img src="img/prev.png" alt="prev">
+    </a>
+    <a href="javascript:void(0);" class="step-container ppt-next">
+        <img src="img/next.png" alt="next">
+    </a>
+    <a href="javascript:void(0);" class="preview">
+        <span class="sqrt-4"><i></i><i></i><i></i><i></i></span>
+        <span>查看预览</span>
+    </a>
+    <div class="preview-cover"></div>
+    <div class="preview-container">
+        <ul class="view-inner"></ul>
     </div>
+    <footer>Copyright &copy; 2000 - 2015 XINHUANET.com　All Rights Reserved. 　制作单位：新华网</footer>
     <script>
     window.data = {
         id:1768,

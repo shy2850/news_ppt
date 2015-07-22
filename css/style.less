@@ -1,17 +1,31 @@
-@media (max-width: 640px){
-    ::-webkit-scrollbar{display: none;}
-}
+
 html,body{
     margin: 0;padding: 0; overflow: hidden; height: 100%;
+    background-color: #282828;
+    color: #fff;
 }
-div, a, img, a img{
+header, footer, div, ul, ol, li, a, i, img, a img{
     margin: 0;padding: 0;border: 0;
 }
+li{list-style: none;}
+header{
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    padding: 1em;
+    width: 36%;
+    img{
+        max-width: 100%;
+    }
+}
+
 #container{
     height: 100%;width: 100%; position: relative; 
     section{
         position: absolute;padding: 0;top: 0;left: 0;height: 100%;width: 100%;
         transition: all .3s ease 0s;
+        overflow: hidden;
     }
     .current{
         z-index: 2;
@@ -19,12 +33,22 @@ div, a, img, a img{
     .prev, .next{
         z-index: 1;
     }
-    .opacity, .bg-ppt{
+    .opacity{
         position: absolute;
         left: 0;
         top: 0;
         width: 100%;
         height: 100%;
+    } 
+    .bg-ppt{
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        @media (max-width: 640px){
+            height: 100%;
+            width: auto;
+        }
     }
     .layout{
         position: relative;
@@ -35,6 +59,17 @@ div, a, img, a img{
         -webkit-box-pack: center;
         -webkit-box-align: center;
         overflow: hidden;
+    }
+    .layout-0, 
+    .layout-0-1,
+    .layout-0-1-2,
+    .layout-0-3,
+    .layout-0-1-3-4,
+    .layout-0-3-6,
+    .layout-0-1-2-3-4-5{
+        .layout-inner{
+            margin-top: 10%;
+        }
     }
     .layout-0-1-2-3-4-5-6-7-8{
         text-align: center;  
@@ -65,8 +100,8 @@ div, a, img, a img{
             text-decoration: none;
             color: #fff;
             display: inline-block;
-            font-size: 16px;
-            padding: .5em .8em;
+            font-size: 22px;
+            padding: .4em .8em;
             border-radius: 5px;
             &:hover{
                 background-color: lighten(#009dd9, 10%);
@@ -86,21 +121,113 @@ div, a, img, a img{
 }
 
 .step-container{
-    display: none;
+    position: absolute;
+    height: 20%;
+    top: 40%;
+    z-index: 3000;
     img{
-        position: absolute;
-        height: 20%;
-        top: 40%;
+        height: 100%;
     }
-    .ppt-prev{
+    &.ppt-prev{
         left: 0;
     }
-    .ppt-next{
+    &.ppt-next{
         right: 0;
     }
 }
+
+.preview{
+    position: absolute;
+    right: 1em;
+    bottom: 4px;
+    color: #fff;
+    text-decoration: none;
+    z-index: 2000;
+    height: 60px;
+    padding: 0 10px 0 50px;
+    font: normal 24px/60px "Microsoft Yahei";
+    text-shadow: 0 0 2px #000;
+    .sqrt-4{
+        position: absolute;
+        left: 5px;
+        top: 10px;
+        height: 40px;
+        width: 40px;
+        i{
+            float: left;
+            width: 15px;
+            height: 15px;
+            background: #fff;
+            margin: 2px;
+            box-shadow: 0 0 4px #000;
+        }
+    }
+}
+
+
+footer{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    font: normal .8rem/30px "Microsoft Yahei";
+    text-align: center;
+}
+
+.preview-cover{
+    display: none;
+    z-index: 1998;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: #282828;
+    opacity: .5;
+    filter: alpha(opacity=50);
+}
+.preview-container{
+    display: none;
+    z-index: 1999;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    overflow: hidden;
+    overflow-x: scroll;
+    .view-inner{
+        li{
+            width: 280px;
+            height: 200px;
+            float: left;
+            border: 4px solid #282828;
+            position: relative;
+            overflow: hidden;
+            img{
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+        }
+        .current, li:hover{
+            border: 4px solid #1a96cc;
+        }
+    }
+}
+
+.onpreview{
+    .preview, .preview-cover, .preview-container{
+        display: block;
+    }
+    .step-container{
+        display: none !important;
+    }
+}
+
 @media (max-width: 640px){
-    .step-container{display: none !important;}
+    ::-webkit-scrollbar{display: none;}
+    .step-container, .preview, footer{display: none;}
 }
 
 @import "layout.less";
