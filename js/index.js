@@ -124,6 +124,7 @@
             onpreview = !onpreview;
         }).on("mousemove", function(e){
             if( onpreview ){return;}
+            if( document.body.clientWidth <= 640 ){return;}
             var per = ( e.pageX / document.body.clientWidth );
             if( per < .25 || per > .75 ){
                 step.show();
@@ -254,7 +255,7 @@
             });
 
             tab.setAuto( data.autoTime || 4000 );
-            
+
             return tab;
         };
 

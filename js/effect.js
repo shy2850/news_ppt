@@ -40,6 +40,8 @@ KISSY.add("ppt/effect", ["node"], function(S, require, exports, module){
             }else{
                 this.addClass( _x ? "hide left" : "show left" );
             }
-        }
+        },
+        reveal: function(_x){},
+        revealY: function(_x){}
     };
 });
