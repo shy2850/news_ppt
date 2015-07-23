@@ -72,6 +72,7 @@
             tar_index = defaults.index | 0;
             effect = EAS[defaults.effect] || EAS.ease;
 
+            viewer.html("");
             sections.each(function(el,i){
                 var src = ( this.children().attr("src") );
                 viewer.append( '<li data-index="'+i+'"><img src="'+src+'" alt=""/></li>' );
@@ -218,15 +219,16 @@
                 +'<div class="layout-inner">'
                     +'<h2>{{title}}</h2>'
                     +'<div class="desc">{{desc}}</div>'
-                    +'<div class="start">{{start}}</div>'
+                    +'<div class="start">{{startBtn}}</div>'
                 +'</div>'
             +'</div>'
             +'</section>';
         return function(data){
             data.typeData = data.typeData || data.pic;
             data.layout = data.layout || "3-4-5";
+            data.bgColor = data.fontbg ? data.bgColor : "none";
             data.desc = '<p>'+(data.desc||"").replace(/\/n/g,'</p><p>')+'</p>'
-            data.start = data.start ? ('<a href="javascript:void(0);" class="ppt-next">'+data.start+'</a>') : '';
+            data.startBtn = data.start ? ('<a href="javascript:void(0);" class="ppt-next">'+data.start+'</a>') : '';
             return template.replace(/\{\{(\w+)\}\}/g,function(mat,k){
                 return data[k] || "";
             });
@@ -238,18 +240,23 @@
             compile = require("ppt/compile"),
             Tab = require("ppt/tab");
 
-        var container = $("#container"), innerHTML = "";
-        innerHTML += compile(data.cover);
-        S.each(data.content, function(page){
-            innerHTML += compile(page);            
-        });
-        container.html( innerHTML );
+        return function(data){
+            var container = $("#container"), innerHTML = "";
+            innerHTML += compile(data.cover);
+            S.each(data.content, function(page){
+                innerHTML += compile(page);            
+            });
+            container.html( innerHTML );
 
-        var tab = new Tab(container,{
-            effect: "rotate"
-        });
+            var tab = new Tab(container,{
+                effect: data.cover.effect || "ease",
+                auto: data.autoRun || false
+            });
 
-        tab.setAuto(4000).setAuto(false);
+            tab.setAuto( data.autoTime || 4000 );
+            
+            return tab;
+        };
 
     });
 })(KISSY);
