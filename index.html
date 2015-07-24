@@ -201,9 +201,9 @@
                 path : '<%=path%>js/'
             }]
         });
-        // data.content.map(function(sec){
-        //     sec.effect = "reveal"
-        // });
+        data.content.map(function(sec){
+            // sec.effect = "ease"
+        });
         window.updateData = function(){};
         KISSY.use(["ppt/index"],function(S, PPT){
             var ppt = PPT(data);

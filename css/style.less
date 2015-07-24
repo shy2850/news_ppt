@@ -26,12 +26,19 @@ header{
         position: absolute;padding: 0;top: 0;left: 0;height: 100%;width: 100%;
         transition: all .3s ease 0s;
         overflow: hidden;
+        opacity: 0;
+        filter: alpha(opacity=0);
+        background: #282828;
     }
     .current{
-        z-index: 2;
+        z-index: 100;
+        opacity: 1;
+        filter: alpha(opacity=100);
     }
     .prev, .next{
-        z-index: 1;
+        z-index: 10;
+        opacity: 1;
+        filter: alpha(opacity=100);
     }
     .opacity{
         position: absolute;

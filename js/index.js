@@ -59,7 +59,8 @@
                 index: 0,
                 effect: "ease",
                 auto: false,
-                autoTime: 5000
+                autoTime: 5000,
+                autoDir: 1
             };
 
         var tip = require("ppt/tip"),
@@ -82,7 +83,8 @@
             });
         };
 
-        var step = $(".step-container"), onpreview;
+        var step = $(".step-container"), onpreview, isAnimate,
+            touchBegin, touchMove;
         $(document).on("keydown", function(e){
             switch(e.keyCode){
                 case 13:
@@ -94,37 +96,45 @@
                     tip( defaults.auto ? "开始自动播放" : "取消自动播放");
                     break;
                 case 39:
-                case 40: tar_index = index + 1; break;
+                case 40: if( !isAnimate && !defaults.auto ){ tar_index = index + 1; } break;
                 case 37:
-                case 38: tar_index = index - 1; break; 
+                case 38: if( !isAnimate && !defaults.auto ){ tar_index = index - 1; } break; 
             }
+        }).on("singleTap", function(e){
+            defaults.auto = false;
+            tip( "取消自动播放" );
         }).on("doubleTap", function(e){
-            defaults.auto = !defaults.auto;
-            tip( defaults.auto ? "开始自动播放" : "取消自动播放", 3 );
-        }).on("swipe", function(e){
-            switch(e.direction){
-                case "left":
-                    tar_index = index + 1; break;
-                case "right":
-                    tar_index = index - 1; break;
-                default:
-                    defaults.auto = !defaults.auto;
-                    tip( defaults.auto ? "开始自动播放" : "取消自动播放", 3 );
+            defaults.auto = true;
+            tip( "开始自动播放" );
+        }).on("touchstart", function(e){
+            touchBegin = e.touches[0].clientX;
+            touchMove = false;
+        }).on("touchmove", function(e){
+            if( isAnimate || defaults.auto || touchMove){return;}
+            touchEnd = e.changedTouches[0].clientX;
+            touchMove = true;
+            if( touchBegin > touchEnd ){
+                tar_index = index + 1;
+            }else{
+                tar_index = index - 1;
             }
         }).delegate("click",".ppt-prev",function(){
+            if( isAnimate || defaults.auto ){return;}
             if(!firstTip){
                 firstTip = true;
-                tip("使用方向键前进后退, 空格切换自动播放", 5);
+                tip("使用方向键前进后退, 空格切换自动播放", 2);
             }
             tar_index = index - 1;
         }).delegate("click",".ppt-next",function(){
+            if( isAnimate || defaults.auto ){return;}
             tar_index = index + 1;
         }).delegate("click",".preview",function(){
             tip("使用Enter键打开关闭 预览模式");
             onpreview = !onpreview;
         }).on("mousemove", function(e){
-            if( onpreview ){return;}
-            if( document.body.clientWidth <= 640 ){return;}
+            if( onpreview || document.body.clientWidth <= 800 ){
+                return;
+            }
             var per = ( e.pageX / document.body.clientWidth );
             if( per < .25 || per > .75 ){
                 step.show();
@@ -148,7 +158,7 @@
                     // 监听自动播放
                     R.addTimeout("ppt/auto", function(){
                         if(defaults.auto){
-                            tar_index = index + 1;
+                            tar_index = index + defaults.autoDir;
                         }
                     },auto);
                 }else{
@@ -166,20 +176,29 @@
             }else{
                 body.removeClass("onpreview");
             }
-            if( sections.each && index != tar_index ){
-                tar_index = Math.max( 0, tar_index ) % sections.length;
+            if( !isAnimate && sections.each && index != tar_index ){
+                if( tar_index >= sections.length ){
+                    tip( "已经是最后一页了");
+                    tar_index = index;
+                    defaults.auto = false;
+                    return;
+                }else if(tar_index < 0){
+                    tip( "已经是第一页了");
+                    tar_index = index;
+                    defaults.auto = false;
+                    return;
+                }
                 var dir = tar_index - index;
                 if(!dir){
                     return;
                 }else{
                     index = tar_index;
                 } 
+                isAnimate = !isAnimate;
                 viewer.children().item(index).addClass("current").siblings().removeClass("current");
                 viewer.parent().scrollLeft(index * 288);   
                 sections.each(function(dom, i){
-                    this.removeClass("current");
-                    this.removeClass("next");
-                    this.removeClass("prev");
+                    this[0].className = this[0].className.replace(/^.*(effect-\w*).*$/,"$1");
                     var flag = "";
                     switch(i){
                         case index: flag = "current";break;
@@ -187,10 +206,12 @@
                         case index + 1: flag = "next";break;
                         default: 
                     }
-                    this.addClass( flag );
-
-                    (EAS[this.attr("data-effect")] || effect).call(this, i-index, dir);
+                    if( flag ){
+                        this.addClass( flag );
+                        (EAS[this.attr("data-effect")] || effect).call(this, i-index, dir);
+                    }
                 });
+                isAnimate = false;
             }
         });
         return Tab;
@@ -208,7 +229,7 @@
                 $("body").append(hl.children[0]);
             }
             holder.children().html(info);
-            holder.fadeIn(t||1).fadeOut(t||1);
+            holder.fadeIn(t||.5).fadeOut(t||.5);
         };
 
     });
