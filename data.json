@@ -1,0 +1,116 @@
+{   
+    "id": 1768,
+    "autoRun": true,
+    "effect": "ease",
+    "inverted": true,
+    "emoticonJsonData": "http://xuan.news.cn/zt/TYX_emoticon.html",
+    "musicUrl":"http://tpic.home.news.cn/xhvedio/xhvedio002/M00/09/E7/wKhMEFWg2okEAAAAAAAAAAAAAAA074.mp3",
+    "cover": {
+        "pic": "http://tpic.home.news.cn/xhCloudNewsPic/xhpic001/M08/6E/6D/wKhTg1WnnUIEAAAAAAAAAAAAAAA846.jpg",
+        "title": "太阳系九兄弟证件照出炉，谁的颜值最高？",
+        "desc": "7月14日，美国太空总署冥王星探测器“新视野号”传回一批迄今最清晰的冥王星照片。至此，太阳系“兄弟”九个终于都有了清晰的“证件照”。小编这就带您瞧瞧他们都长啥样？！",
+        "start": "扫盲帖"
+    },
+    "content": [
+        {
+            "layout": "0-3-6",
+            "fontbg": true,
+            "effect": "dirShow",
+            "typeData": "http://tpic.home.news.cn/xhCloudNewsPic/xhpic001/M08/6E/0F/wKhTglWnnBgEAAAAAAAAAAAAAAA277.jpg",
+            "title": "“九兄弟”的前世今生",
+            "desc": "很久以前，太阳系里住着九个兄弟，他们是水星、金星、地球、火星、木星、土星、天王星、海王星和冥王星。/n但是随着太阳系边缘的柯伊伯带中的新天体不断被发现，冥王星的地位逐渐受到威胁。特别是2005年发现的阋神星，当时被认为比冥王星更大。2006年，冥王星因为达不到太阳系行星新标准而“惨遭降级”，被定义为“矮行星”。此后，“九大行星”家族变成了“八大行星”。/n依据美国航天局2015年7月13日公布的最新数据显示，冥王星的个头比阋神星更大！这一回，冥王星总算是“扬眉吐气”了。这不，“他”连“证件照”都拍好了（右图），就等着跟自己的八位兄长“召唤神龙”！/n小编这就给您一一引荐冥王星的八位兄长。",
+            "bgColor": "#000"
+        },
+        {
+            "layout": "3-4-5",
+            "fontbg": true,
+            "effect": "revealY",
+            "typeData": "http://tpic.home.news.cn/xhCloudNewsPic/xhpic001/M01/6E/10/wKhTglWnnKEEAAAAAAAAAAAAAAA001.jpg",
+            "title": "水星",
+            "desc": "【家族地位】水星是最靠近太阳的行星。/n\r\n【个人特征】 有人说水星，上面一定全是水吧，其实不然，水星和水完全是两回事。水星是我们中国人的叫法，我国古代称其为“辰星”。在西方，人们是用希腊神话中的人物来给行星命名的。古希腊人因为看到水星的运行速度快，绕太阳的公转时间最少，所以把希腊神话中跑得最快的信使“mercury”的名字作为水星的名字。跟太阳系的其他天体相比，水星简直就是个<span style=\"font-weight:bold;\">小黑炭</span>，其表面颜色特别深，反射阳光的能力很弱。/n\r\n【情感状态】单身！（至今未发现水星有卫星。）",
+            "bgColor": "#f60"
+        },
+        {
+            "layout": "2-5-8",
+            "fontbg": true,
+            "effect": "revealY",
+            "typeData": "http://tpic.home.news.cn/xhCloudNewsPic/xhpic001/M06/6E/10/wKhTglWnnN0EAAAAAAAAAAAAAAA914.jpg",
+            "title": "金星",
+            "desc": "【家族地位】金星是离太阳第二近的行星。/n\r\n【个人特征】金星的大小和质量都与地球相似，是离地球最近的行星，因此我们也把这颗星球看作我们地球的孪生姊妹。金星是整个天空中除了太阳和月亮之外<span style=\"font-weight:bold;\">最亮的自然天体</span>，中国古代称之为“太白”。有时黄昏出在西方，称“长庚星”；而有时则在黎明时分出现在东方，称“启明星”。金星离太阳约10800千米，自转方向与其他行星相反，在金星上真的是<span style=\"font-weight:bold;\">“太阳从西边升起”</span>。/n\r\n【情感状态】单身！（金星也没有卫星。）",
+            "bgColor": "#f00"
+        },
+        {
+            "layout": "6-7-8",
+            "fontbg": true,
+            "effect": "revealY",
+            "typeData": "http://tpic.home.news.cn/xhCloudNewsPic/xhpic001/M08/6E/6D/wKhTg1WnnUIEAAAAAAAAAAAAAAA846.jpg",
+            "title": "地球",
+            "desc": "【家族地位】地球是距太阳第三近的行星。/n\r\n【个人特征】地球是我们人类的家乡，尽管地球是太阳系中一颗普通的行星，但其在许多方面都是独一无二的。比如，地球是太阳系中唯一一颗面积大部分被水覆盖的行星，也是目前所知<span style=”font-weight:bold;”>唯一一颗有生命存在</span>的星球。/n\r\n【情感状态】已婚！（地球有一个卫星，也就是我们夜晚抬头能看见的月亮。月亮在太阳系中是地球唯一的天然卫星。）",
+            "bgPic": "",
+            "bgColor": "#0f0"
+        },
+        {
+            "layout": "1-4-7",
+            "fontbg": true,
+            "effect": "fade",
+            "typeData": "http://tpic.home.news.cn/xhCloudNewsPic/xhpic001/M06/6E/6D/wKhTg1WnnXcEAAAAAAAAAAAAAAA265.jpg",
+            "title": "火星",
+            "desc": "【家族地位】是太阳系由内往外数的第四颗行星。/n\r\n【个人特征】火星看起来是天穹上的一个小亮点，它那暗红的颜色很容易使人联想到铁和血，所以古代西方人就把它和战争之神联系起来。火星在国际上通称“马尔斯”，这正是古罗马神话中战神的名字。像地球一样，火星上<span style=\"font-weight:bold;\">有大气，有水</span>（已经发现了水冰，以及湖盆和河道的遗迹），这提供了生物生存的条件。/n\r\n【情感状态】三角恋！（火星有两个天然卫星：火卫一和火卫二。）",
+            "bgColor": "#00f"
+        },
+        {
+            "layout": "0-1-3-4",
+            "fontbg": true,
+            "effect": "dirShow",
+            "typeData": "http://tpic.home.news.cn/xhCloudNewsPic/xhpic001/M03/6E/6D/wKhTg1WnncEEAAAAAAAAAAAAAAA546.jpg",
+            "title": "木星",
+            "desc": "【家族地位】木星是离太阳第五颗行星，而且是最大的一颗。/n\r\n【个人特征】木星是九兄弟中<span style=\"font-weight:bold;\">最魁梧</span>的巨人。木星很明亮，亮度仅次于金星。中国古代用木星来定岁纪年，因此木星又叫“岁星”。西方天文学家称木星为“朱庇特”，即罗马神话中的众神之王。木星有着突出的特点，质量大、体积大。其质量是地球的1316倍，是太阳系中其他8颗行星加在一起的二倍半。/n【情感状态】暧昧中。（木星现今有68颗已知卫星。）",
+            "bgColor": "#ff0"
+        },
+        {
+            "layout": "4-5-7-8",
+            "fontbg": true,
+            "effect": "rotate",
+            "typeData": "http://tpic.home.news.cn/xhCloudNewsPic/xhpic001/M00/6E/6D/wKhTg1Wnng0EAAAAAAAAAAAAAAA052.jpg",
+            "title": "土星",
+            "desc": "【家族地位】土星是离太阳第六远的行星。/n\r\n【个人特征】土星是夜空最美丽的星球之一，它是肉眼易见的大行星中离地球最远的，它拥有雄伟、美丽的光环，在望远镜中，其外形像一顶草帽，被誉为<span style=\"font-weight:bold;\">“指环王”</span>。我国古代称土星为“填星”或“镇星”。土星绕日公转周期为29.458年，所以每过15年，土星的光环就会“消失”一次。/n\r\n【情感状态】暧昧中。（土星目前有62颗被命名的卫星。）",
+            "bgColor": "#f0f"
+        },
+        {
+            "layout": "0-3-6",
+            "fontbg": false,
+            "effect": "reveal",
+            "typeData": "http://tpic.home.news.cn/xhCloudNewsPic/xhpic001/M05/6E/6D/wKhTg1WnnkkEAAAAAAAAAAAAAAA533.jpg",
+            "title": "天王星",
+            "desc": "【家族地位】天王星是太阳系中离太阳第七远的行星，体积比海王星大，质量却比其小。/n\r\n【个人特征】在古老的希腊神话中，天王星被看作是第一位统治整个宇宙的天神--乌刺诺斯。他与地母该亚结合，生下了后来的天神，是他费尽心机将混沌的宇宙规划得和谐有序。天王星也有光环，但却是<span style=\"font-weight:bold;\">微弱的光环</span>。/n\r\n【情感状态】暧昧中。（已知天王星有27颗天然的卫星。）",
+            "bgColor": "#ffffff"
+        },
+        {
+            "layout": "0-1-2",
+            "fontbg": true,
+            "effect": "reveal",
+            "typeData": "http://tpic.home.news.cn/xhCloudNewsPic/xhpic001/M07/6E/6D/wKhTg1WnnmcEAAAAAAAAAAAAAAA559.jpg",
+            "title": "海王星",
+            "desc": "【家族地位】海王星是环绕太阳运行的第八颗行星。/n\r\n【个人特征】海王星是一颗<span style=\"font-weight:bold;\">淡蓝色</span>的行星，人们根据传统的行星命名法，称其为涅普顿。涅普顿是罗马神话中统治大海的海神，掌握着1/3的宇宙，颇有神通。海王星由于距离遥远，光度暗淡，即使用大型望远镜也难看清其表面细节。 /n\r\n【情感状态】暧昧中。（海王星有14颗已知的天然卫星。）",
+            "bgColor": "#c00"
+        },
+        {
+            "layout": "2-5-8",
+            "fontbg": true,
+            "effect": "reveal",
+            "typeData": "http://tpic.home.news.cn/xhCloudNewsPic/xhpic001/M05/6E/F9/wKhTglWoW_sEAAAAAAAAAAAAAAA182.jpg",
+            "title": "冥王星，终于等到你，还好我没放弃！",
+            "desc": "2015年7月14日，冥王星探测器历时9年半、飞行约50亿公里，终于传回迄今最清晰的冥王星照片。但证件照才刚刚出炉，就被“地球人”给“玩坏了”！各路网友脑洞大开，把“素颜”示人的“冥王星”描画成了“萌王星”，没想到幽冷神秘的冥王星原来暖暖哒！/n\r\n@Begins-Sunny ：我大天蝎的守护星/n\r\n@孙悟不想空：让我用心把你留下来~嘿！留下来~/n\r\n@Di_amo：如果你不能留下，那宁愿你不曾到达。/n\r\n@猪头小质：不知道月亮上的兔几知道么？/n\r\n图为网友创作的冥王星照片。",
+            "bgColor": "#ffffff"
+        },
+        {
+            "layout": "0-1-2-3-4-5-6-7-8",
+            "fontbg": true,
+            "effect": "rotate",
+            "typeData": "http://tpic.home.news.cn/xhCloudNewsPic/xhpic001/M05/6F/F4/wKhTglWooqkEAAAAAAAAAAAAAAA867.jpg",
+            "title": "【投票】太阳系九兄弟，谁的颜值最高？",
+            "desc": "<a style=\"line-height:25px;dispaly:block;text-decoration:none;color:#ffffff;                                 \" href=\"http://vote.home.news.cn/poll/detail.do?id=1409\" target=\" _blank\" >\r\n☞天王星（图1）/n\r\n☞地球（图2）/n\r\n☞海王星（图3）/n\r\n☞火星（图4）/n\r\n☞金星（图5）/n\r\n☞冥王星（图6）/n\r\n☞木星（图7）/n\r\n☞水星（图8）/n\r\n☞土星（图9）/n\r\n</a>",
+            "bgColor": "#000"
+        }
+    ]
+}

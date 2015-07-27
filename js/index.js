@@ -1,5 +1,83 @@
 ;(function(S){
 
+    window.cfg = {
+
+        mask : {
+            link : "http://xuan.news.cn/newspace/index.html",
+            getComment : "http://comment.home.news.cn/a/newsCommAll.do",
+            newsInfo : "http://comment.home.news.cn/a/newsInfo.do",
+            moreNews : "http://xuan.news.cn/cloudnews/juhe/index.json",
+            addComment : "http://xuan.news.cn/a/adComment.do",
+            loginCheck : "http://xuan.news.cn/cloudc/loadUser.xhtm?loginCheck=true",
+            shareXuan : "http://xuan.news.cn/cloudc/member/shareFriend.xhtm",
+            emoList: 'http://comment.home.news.cn/a/emoList?newsId=',
+            emoUp: 'http://comment.home.news.cn/a/emoUp'
+        },
+        music : {
+             swf : "http://tmisc.home.news.cn/story/js/swf/NewsPlayer.swf"
+        }
+
+        // mask : {
+        //  link : "http://xuan.news.cn/newspace/index.html",
+        //  getComment : "http://comment.home.news.cn/a/newsCommAll.do",
+        //  newsInfo : "http://comment.home.news.cn/a/newsInfo.do",
+        //  moreNews : "../data/more.json",
+        //  addComment : "../data/addComment.json",
+        //  loginCheck : "../data/loginCheckFail.json",
+        //  shareXuan : "../data/shareXuan.json",
+        //  emoList: 'http://comment.home.news.cn/a/emoList?newsId=',
+        //  emoUp: 'http://comment.home.news.cn/a/emoUp',
+        //  jsonData:'../data/2033497_emoticon.html?t='+new Date().getTime()
+        // },
+        // music : {
+        //  swf : "../js/swf/NewsPlayer.swf"
+        // }
+    };
+
+    /**
+     * 多图片预加载
+    **/
+    KISSY.add("ppt/imgload", ["node"], function(S,require){
+        var $ = require("node").all,
+            cfg = {
+                img: "img",
+                holder: "body",
+                onprocess: function(e){}, // 加载所有需要处理的图片过程中
+                onload: function(e){},
+                onerror: function(e){}
+            };
+        return  function(o){
+            var  o = S.merge( {}, cfg, o ),
+                imgs = $( o.img, o.holder ), 
+                length = imgs.length, 
+                loaded = 0;
+
+            imgs.on("load",function(e){
+                loaded++;
+                o.onprocess({
+                    length: length,
+                    loaded: loaded,
+                    img: this
+                });
+                if( loaded == length ){
+                    o.onload({});
+                }
+            }).on("error",function(e){
+                loaded++;
+                o.onerror({
+                    length: length,
+                    loaded: loaded,
+                    img: this,
+                    error: e
+                });
+                if( loaded == length ){
+                    o.onload({error:e});
+                }
+            }).each(function(img){
+                img.attr({ src: img.attr("data-src") });
+            });
+        };
+    });
 
     // 定时器封装
     S.add("ppt/r", function(S){
@@ -56,7 +134,7 @@
             sections = {}, 
             effect = function(){},
             defaults = {
-                index: 0,
+                index: -1,
                 effect: "ease",
                 auto: false,
                 autoTime: 5000,
@@ -75,7 +153,7 @@
 
             viewer.html("");
             sections.each(function(el,i){
-                var src = ( this.children().attr("src") );
+                var src = ( this.children().attr("data-src") );
                 viewer.append( '<li data-index="'+i+'"><img src="'+src+'" alt=""/></li>' );
             });
             viewer.css({
@@ -102,7 +180,6 @@
             }
         }).on("singleTap", function(e){
             defaults.auto = false;
-            tip( "取消自动播放" );
         }).on("doubleTap", function(e){
             defaults.auto = true;
             tip( "开始自动播放" );
@@ -119,14 +196,20 @@
                 tar_index = index - 1;
             }
         }).delegate("click",".ppt-prev",function(){
-            if( isAnimate || defaults.auto ){return;}
+            defaults.auto = false;
+            if( isAnimate ){return;}
             if(!firstTip){
                 firstTip = true;
                 tip("使用方向键前进后退, 空格切换自动播放", 2);
             }
             tar_index = index - 1;
         }).delegate("click",".ppt-next",function(){
-            if( isAnimate || defaults.auto ){return;}
+            defaults.auto = false;
+            if( isAnimate ){return;}
+            if(!firstTip){
+                firstTip = true;
+                tip("使用方向键前进后退, 空格切换自动播放", 2);
+            }
             tar_index = index + 1;
         }).delegate("click",".preview",function(){
             tip("使用Enter键打开关闭 预览模式");
@@ -176,7 +259,7 @@
             }else{
                 body.removeClass("onpreview");
             }
-            if( !isAnimate && sections.each && index != tar_index ){
+            if( !isAnimate && sections.each ){
                 if( tar_index >= sections.length ){
                     tip( "已经是最后一页了");
                     tar_index = index;
@@ -189,7 +272,7 @@
                     return;
                 }
                 var dir = tar_index - index;
-                if(!dir){
+                if(!dir && sections.item(index).hasClass("current") ){
                     return;
                 }else{
                     index = tar_index;
@@ -235,7 +318,7 @@
     });
     S.add("ppt/compile",[],function(S){
         var template = '<section data-effect="{{effect}}" class="effect-{{effect}}">'
-            +'<img src="{{typeData}}" class="bg-ppt"/>'
+            + '{{typeImg}}'
             +'<div class="layout layout-{{layout}}">'
                 +'<div class="opacity" style="background-color:{{bgColor}};"></div>'
                 +'<div class="layout-inner">'
@@ -247,6 +330,9 @@
             +'</section>';
         return function(data){
             data.typeData = data.typeData || data.pic;
+            if( data.typeData ){
+                data.typeImg = '<img data-src="'+data.typeData+'" class="bg-ppt"/>';
+            }
             data.layout = data.layout || "3-4-5";
             data.bgColor = data.fontbg ? data.bgColor : "none";
             data.desc = '<p>'+(data.desc||"").replace(/\/n/g,'</p><p>')+'</p>'
@@ -257,13 +343,45 @@
         };
     });
 
-    S.add("ppt/index", ["node","ppt/compile","ppt/tab"],function(S, require, exports, module){
+    S.add("ppt/loading", ["node"],function(S, require, exports, module){
+         var $ = require("node").all, 
+            loading = $("<div></div>");
+         loading.css({
+            position:"absolute",
+            height: 4,
+            left: 0,
+            top: 0,
+            backgroundColor: "#1a96cc"
+         });
+         $("body").append( loading );
+         return loading;
+    });
+
+    S.add("ppt/index", [
+        "node",
+        "ppt/compile",
+        "ppt/tab",
+        "ppt/imgload",
+        "ppt/loading",
+        "mp/mask",
+        "mp/music"
+    ],function(S, require, exports, module){
         var $ = require("node").all,
             compile = require("ppt/compile"),
-            Tab = require("ppt/tab");
+            Imgload = require("ppt/imgload"),
+            loading = require("ppt/loading"),
+            Tab = require("ppt/tab"),
+            Mask = require("mp/mask"),
+            Music = require("mp/music");
 
         return function(data){
-            var container = $("#container"), innerHTML = "";
+            var container = $("#ppt-container"), innerHTML = "";
+            var mask = new Mask(data);
+            //加入背景音乐
+            if(data.musicUrl){
+                new Music(data);
+            }
+
             innerHTML += compile(data.cover);
             S.each(data.content, function(page){
                 innerHTML += compile(page);            
@@ -276,6 +394,27 @@
             });
 
             tab.setAuto( data.autoTime || 4000 );
+            
+            tab.ready = function(fn, index){
+                if( typeof fn == "number" ){
+                    index = fn;
+                    fn = undefined;
+                }
+
+                new Imgload({
+                    img: ".bg-ppt",
+                    onload: function(){
+                        setTimeout(fn,200);
+                        loading.fadeOut();
+                        tab.to( index || 0 );
+                    },
+                    onprocess: function(e){
+                        loading.stop().animate({
+                            width: (100 * e.loaded / e.length) + "%"
+                        },.3);
+                    }
+                });
+            };
 
             return tab;
         };
