@@ -1,5 +1,4 @@
 ;(function(S){
-
     window.cfg = {
 
         mask : {
@@ -264,6 +263,8 @@
                     tip( "已经是最后一页了");
                     tar_index = index;
                     defaults.auto = false;
+                    console.log( defaults.mask );
+                    defaults.plugins.mask && defaults.plugins.mask.more_comment();
                     return;
                 }else if(tar_index < 0){
                     tip( "已经是第一页了");
@@ -362,24 +363,24 @@
         "ppt/compile",
         "ppt/tab",
         "ppt/imgload",
-        "ppt/loading",
-        "mp/mask",
-        "mp/music"
+        "ppt/loading"
     ],function(S, require, exports, module){
         var $ = require("node").all,
             compile = require("ppt/compile"),
             Imgload = require("ppt/imgload"),
             loading = require("ppt/loading"),
-            Tab = require("ppt/tab"),
-            Mask = require("mp/mask"),
-            Music = require("mp/music");
-
+            Tab = require("ppt/tab");
         return function(data){
-            var container = $("#ppt-container"), innerHTML = "";
-            var mask = new Mask(data);
-            //加入背景音乐
-            if(data.musicUrl){
-                new Music(data);
+            var container = $("#ppt-container"), innerHTML = "", plugins = {};
+
+            if( !navigator.userAgent.match(/mobile/i) ){
+                S.use(["mp/mask","mp/music"], function(S, Mask, Music){
+                    plugins.mask = new Mask(data);
+                    //加入背景音乐
+                    if(data.musicUrl){
+                        new Music(data);
+                    }
+                });
             }
 
             innerHTML += compile(data.cover);
@@ -390,7 +391,8 @@
 
             var tab = new Tab(container,{
                 effect: data.cover.effect || "ease",
-                auto: data.autoRun || false
+                auto: data.autoRun || false,
+                plugins: plugins
             });
 
             tab.setAuto( data.autoTime || 4000 );

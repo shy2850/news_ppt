@@ -2,7 +2,6 @@
     "id": 1768,
     "autoRun": true,
     "effect": "ease",
-    "inverted": true,
     "emoticonJsonData": "http://xuan.news.cn/zt/TYX_emoticon.html",
     "musicUrl":"http://tpic.home.news.cn/xhvedio/xhvedio002/M00/09/E7/wKhMEFWg2okEAAAAAAAAAAAAAAA074.mp3",
     "cover": {
