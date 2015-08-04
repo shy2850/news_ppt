@@ -267,7 +267,6 @@
                     defaults.plugins.mask && defaults.plugins.mask.more_comment();
                     return;
                 }else if(tar_index < 0){
-                    tip( "已经是第一页了");
                     tar_index = index;
                     defaults.auto = false;
                     return;
@@ -346,15 +345,31 @@
 
     S.add("ppt/loading", ["node"],function(S, require, exports, module){
          var $ = require("node").all, 
-            loading = $("<div></div>");
+            loading = $('<div><div class="inner"></div></div>'),
+            inner = loading.children();
          loading.css({
             position:"absolute",
-            height: 4,
+            width: "40%",
+            height: 20,
+            left: "30%",
+            top: "50%",
+            marginTop: -10,
+            border: "1px solid #fff",
+            overflow: "hidden"
+         });
+         inner.css({
+            position:"absolute",
+            height: "100%",
             left: 0,
             top: 0,
             backgroundColor: "#1a96cc"
          });
          $("body").append( loading );
+         loading.to = function(per){
+            inner.stop().animate({
+                width: 100 * per + "%"
+            },.3);
+         };
          return loading;
     });
 
@@ -411,9 +426,7 @@
                         tab.to( index || 0 );
                     },
                     onprocess: function(e){
-                        loading.stop().animate({
-                            width: (100 * e.loaded / e.length) + "%"
-                        },.3);
+                        loading.to( e.loaded / e.length );
                     }
                 });
             };
